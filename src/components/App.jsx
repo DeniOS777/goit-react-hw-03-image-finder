@@ -4,6 +4,8 @@ import { ImageGallery } from './ImageGallery';
 import { Button } from './Button';
 import { GlobalStyle } from './GlobalStyle';
 
+// import { Loader } from './Loader';
+
 export class App extends Component {
   render() {
     return (
