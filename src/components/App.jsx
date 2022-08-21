@@ -1,12 +1,19 @@
+import React, { Component } from 'react';
+import { Searchbar } from './Searchbar';
+import { ImageGallery } from './ImageGallery';
+import { Button } from './Button';
 import { GlobalStyle } from './GlobalStyle';
 
-export const App = () => {
-  return (
-    <div>
+export class App extends Component {
+  render() {
+    return (
       <div>
-        <h1>Homework 03</h1>
+        <Searchbar onSubmit={console.log} />
+        <ImageGallery items={[1, 2, 3, 4, 5]} />
+
+        <Button>Load more</Button>
+        <GlobalStyle />
       </div>
-      <GlobalStyle />
-    </div>
-  );
-};
+    );
+  }
+}
