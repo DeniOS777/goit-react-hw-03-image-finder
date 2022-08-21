@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Searchbar } from './Searchbar';
+import * as API from '../services';
 import { ImageGallery } from './ImageGallery';
 import { Button } from './Button';
 import { GlobalStyle } from './GlobalStyle';
@@ -10,6 +11,7 @@ import { GlobalStyle } from './GlobalStyle';
 
 export class App extends Component {
   state = {
+    images: [],
     largeImageURL: null,
   };
 
@@ -17,13 +19,21 @@ export class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {}
 
+  searchImages = async query => {
+    const images = await API.getImages(query);
+    console.log(images);
+    this.setState(prevState => ({ images: [...prevState.images, ...images] }));
+  };
+
   render() {
+    const { images } = this.state;
+
     return (
       <div>
-        <Searchbar onSubmit={console.log} />
-        <ImageGallery items={[1, 2, 3, 4, 5]} />
+        <Searchbar onSubmit={this.searchImages} />
+        <ImageGallery items={images} />
 
-        <Button>Load more</Button>
+        {images.length > 0 && <Button> Load more</Button>}
         <GlobalStyle />
       </div>
     );
