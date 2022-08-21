@@ -17,7 +17,14 @@ export class Searchbar extends Component {
     const { searchQuery } = this.state;
 
     return (
-      <Box as="header" bg="blue" p={2} display="flex" justifyContent="center">
+      <Box
+        as="header"
+        bg="blue"
+        p={2}
+        mb={2}
+        display="flex"
+        justifyContent="center"
+      >
         <form onSubmit={this.handleSubmit}>
           <button type="submit">
             <span>Search</span>

@@ -1,16 +1,13 @@
 import React from 'react';
 import { ImageGalleryItem } from '../ImageGalleryItem';
+import { ImageList } from './ImageGallery.styled';
 
 export const ImageGallery = ({ items }) => {
   return (
-    <ul>
-      {items.map(item => (
-        <ImageGalleryItem
-          key={item.id}
-          smallImage={item.webformatURL}
-          tag={item.tags}
-        />
+    <ImageList>
+      {items.map(({ id, webformatURL, tags }) => (
+        <ImageGalleryItem key={id} smallImage={webformatURL} tag={tags} />
       ))}
-    </ul>
+    </ImageList>
   );
 };
