@@ -4,7 +4,7 @@ import { Backdrop, ModalWindow } from './Modal.styled';
 export class Modal extends Component {
   componentDidMount() {}
 
-  componentDidUpdate(prevProps, prevState) {}
+  componentWillUnmount() {}
 
   render() {
     return (

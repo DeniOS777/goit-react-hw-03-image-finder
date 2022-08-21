@@ -6,7 +6,17 @@ import { GlobalStyle } from './GlobalStyle';
 
 // import { Loader } from './Loader';
 
+// import { Modal } from './Modal';
+
 export class App extends Component {
+  state = {
+    largeImageURL: null,
+  };
+
+  componentDidMount() {}
+
+  componentDidUpdate(prevProps, prevState) {}
+
   render() {
     return (
       <div>
