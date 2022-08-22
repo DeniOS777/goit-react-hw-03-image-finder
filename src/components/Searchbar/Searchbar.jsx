@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { IoSearchOutline } from 'react-icons/io5';
 import { Box } from '../Box';
+import { Form, Input, Button } from './Searchbar.styled';
 
 export class Searchbar extends Component {
   state = {
@@ -25,12 +27,12 @@ export class Searchbar extends Component {
         display="flex"
         justifyContent="center"
       >
-        <form onSubmit={this.handleSubmit}>
-          <button type="submit">
-            <span>Search</span>
-          </button>
+        <Form onSubmit={this.handleSubmit}>
+          <Button type="submit">
+            <IoSearchOutline />
+          </Button>
 
-          <input
+          <Input
             onChange={this.handleChange}
             type="text"
             value={searchQuery}
@@ -38,7 +40,7 @@ export class Searchbar extends Component {
             autoFocus
             placeholder="Search images and photos"
           />
-        </form>
+        </Form>
       </Box>
     );
   }

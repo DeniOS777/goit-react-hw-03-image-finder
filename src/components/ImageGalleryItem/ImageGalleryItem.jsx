@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ImageItem } from './ImageGalleryItem.styled';
 import { Modal } from '../Modal';
+import { ImageItem } from './ImageGalleryItem.styled';
 
 export class ImageGalleryItem extends Component {
   state = {
