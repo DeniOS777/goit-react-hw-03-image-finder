@@ -6,7 +6,7 @@ export const Backdrop = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 export const ModalWindow = styled.div`
@@ -14,8 +14,9 @@ export const ModalWindow = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  height: 200px;
+  /* width: 300px; */
+  /* height: 200px; */
   background-color: #ffffff;
   border-radius: ${p => p.theme.radii[6]};
+  overflow: hidden;
 `;
