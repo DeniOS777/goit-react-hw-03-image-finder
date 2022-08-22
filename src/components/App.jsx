@@ -12,6 +12,7 @@ import { GlobalStyle } from './GlobalStyle';
 export class App extends Component {
   state = {
     images: [],
+    page: 1,
     largeImageURL: '',
   };
 
@@ -20,14 +21,17 @@ export class App extends Component {
   componentDidUpdate(prevProps, prevState) {}
 
   searchImages = async query => {
+    const { page } = this.state;
+
     try {
       if (!query) {
         return console.log('Enter search word');
       }
-      const images = await API.getImages(query);
+      const images = await API.getImages(query, page);
       console.log(images);
       this.setState(prevState => ({
         images: [...prevState.images, ...images],
+        page: page + 1,
       }));
     } catch (error) {
       console.log(error.message);
