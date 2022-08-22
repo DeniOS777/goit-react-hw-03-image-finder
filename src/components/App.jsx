@@ -14,34 +14,38 @@ export class App extends Component {
     images: [],
     query: '',
     page: 1,
-    largeImageURL: '',
   };
 
   componentDidMount() {}
 
-  componentDidUpdate(prevProps, prevState) {}
+  async componentDidUpdate(_, prevState) {
+    const { query, page } = this.state;
+    console.log('prevQuery', prevState.query);
+    console.log('nextQuery', this.state.query);
 
-  searchImages = async query => {
-    const { page } = this.state;
-
-    try {
-      if (!query) {
-        return console.log('Enter search word');
-      }
+    if (
+      prevState.query !== this.state.query ||
+      prevState.page !== this.state.page
+    ) {
+      console.log('Fetch images');
       const images = await API.getImages(query, page);
-      console.log(images);
       this.setState(prevState => ({
         images: [...prevState.images, ...images],
-        page: page + 1,
-        query,
       }));
-    } catch (error) {
-      console.log(error.message);
     }
+  }
+
+  searchImages = query => {
+    if (!query) {
+      return console.log('Enter search word');
+    }
+    this.setState({ query, page: 1, images: [] });
   };
 
+  loadMore = () => this.setState(prevState => ({ page: prevState.page + 1 }));
+
   render() {
-    const { images, query } = this.state;
+    const { images } = this.state;
 
     return (
       <div>
@@ -49,13 +53,29 @@ export class App extends Component {
         <ImageGallery items={images} />
 
         {images.length > 0 && (
-          <Button onLoadMore={() => this.searchImages(query)}>
-            {' '}
-            Load more
-          </Button>
+          <Button loadMore={this.loadMore}>Load more</Button>
         )}
         <GlobalStyle />
       </div>
     );
   }
 }
+
+// searchImages = async query => {
+//   const { page } = this.state;
+
+//   try {
+//     if (!query) {
+//       return console.log('Enter search word');
+//     }
+//     const images = await API.getImages(query, page);
+//     console.log(images);
+//     this.setState(prevState => ({
+//       images: [...prevState.images, ...images],
+//       page: page + 1,
+//       query,
+//     }));
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
