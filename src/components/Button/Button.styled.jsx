@@ -4,6 +4,7 @@ export const LoadMore = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
   padding: 10px 25px;
   color: ${p => p.theme.colors.white};
   background-color: ${p => p.theme.colors.blue};
