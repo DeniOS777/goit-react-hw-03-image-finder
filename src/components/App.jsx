@@ -12,6 +12,7 @@ import { GlobalStyle } from './GlobalStyle';
 export class App extends Component {
   state = {
     images: [],
+    query: '',
     page: 1,
     largeImageURL: '',
   };
@@ -32,6 +33,7 @@ export class App extends Component {
       this.setState(prevState => ({
         images: [...prevState.images, ...images],
         page: page + 1,
+        query,
       }));
     } catch (error) {
       console.log(error.message);
@@ -39,14 +41,19 @@ export class App extends Component {
   };
 
   render() {
-    const { images } = this.state;
+    const { images, query } = this.state;
 
     return (
       <div>
         <Searchbar onSubmit={this.searchImages} />
         <ImageGallery items={images} />
 
-        {images.length > 0 && <Button> Load more</Button>}
+        {images.length > 0 && (
+          <Button onLoadMore={() => this.searchImages(query)}>
+            {' '}
+            Load more
+          </Button>
+        )}
         <GlobalStyle />
       </div>
     );
