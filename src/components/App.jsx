@@ -17,19 +17,17 @@ export class App extends Component {
     isLoading: false,
   };
 
-  componentDidMount() {}
-
   async componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
+    const prevQuery = prevState.query;
+    const prevPage = prevState.page;
+    const nextQuery = this.state.query;
+    const nextPage = this.state.page;
 
-    if (
-      prevState.query !== this.state.query ||
-      prevState.page !== this.state.page
-    ) {
+    if (prevQuery !== nextQuery || prevPage !== nextPage) {
       const data = await API.getImages(query, page);
       const images = data.hits;
       console.log(data);
-
       this.setState(prevState => ({
         images: [...prevState.images, ...images],
         isLoading: false,
@@ -41,7 +39,12 @@ export class App extends Component {
     if (!query) {
       return console.log('Enter search word');
     }
-    this.setState({ query, page: 1, images: [], isLoading: true });
+    this.setState({
+      query,
+      page: 1,
+      images: [],
+      isLoading: true,
+    });
   };
 
   loadMoreImages = () =>
@@ -64,3 +67,11 @@ export class App extends Component {
     );
   }
 }
+
+// if (totalHits > perPage * page) {
+//        500         12      40
+// }
+// 40 * 12 = 480
+// 41 * 12 = 492
+// 42 * 12 = 504 Ok
+// 43 * 12 = error
