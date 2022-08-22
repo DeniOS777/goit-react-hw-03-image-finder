@@ -7,9 +7,11 @@ export const Form = styled.form`
 
 export const Input = styled.input`
   position: relative;
-  padding: 7px 0;
+  padding-top: 7px;
+  padding-bottom: 7px;
   padding-left: 30px;
   width: 300px;
+  border-style: none;
 `;
 
 export const Button = styled.button`
