@@ -37,7 +37,7 @@ export class Searchbar extends Component {
             autoFocus
             placeholder="Search images and photos"
           />
-          <Button type="submit">
+          <Button type="submit" aria-label="search button">
             <IoSearchOutline />
           </Button>
         </Form>

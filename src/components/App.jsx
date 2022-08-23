@@ -65,7 +65,7 @@ export class App extends Component {
         {isLoading && <Loader />}
 
         {images.length > 0 && !isLoading && (
-          <Button loadMore={this.loadMoreImages}>Load more</Button>
+          <Button onClick={this.loadMoreImages}>Load more</Button>
         )}
         <GlobalStyle />
         <ToastContainer autoClose={2500} />
