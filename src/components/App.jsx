@@ -28,6 +28,10 @@ export class App extends Component {
       const data = await API.getImages(query, page);
       const images = data.hits;
       console.log(data);
+      if (images.length === 0) {
+        this.setState({ isLoading: false });
+        return console.log('whoops not finded images');
+      }
       this.setState(prevState => ({
         images: [...prevState.images, ...images],
         isLoading: false,
@@ -37,7 +41,7 @@ export class App extends Component {
 
   handleSubmit = query => {
     if (!query) {
-      return toast.info('Please enter a search word for search');
+      return toast.info('Please enter a keyword for search');
     }
     this.setState({
       query,
@@ -59,6 +63,7 @@ export class App extends Component {
         <ImageGallery items={images} />
 
         {isLoading && <Loader />}
+
         {images.length > 0 && (
           <Button loadMore={this.loadMoreImages}>Load more</Button>
         )}

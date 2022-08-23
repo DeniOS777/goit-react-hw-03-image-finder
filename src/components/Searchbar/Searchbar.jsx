@@ -28,10 +28,6 @@ export class Searchbar extends Component {
         justifyContent="center"
       >
         <Form onSubmit={this.handleSubmit}>
-          <Button type="submit">
-            <IoSearchOutline />
-          </Button>
-
           <Input
             onChange={this.handleChange}
             type="text"
@@ -40,6 +36,9 @@ export class Searchbar extends Component {
             autoFocus
             placeholder="Search images and photos"
           />
+          <Button type="submit">
+            <IoSearchOutline />
+          </Button>
         </Form>
       </Box>
     );
