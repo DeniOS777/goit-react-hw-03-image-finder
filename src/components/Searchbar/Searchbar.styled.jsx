@@ -7,11 +7,12 @@ export const Form = styled.form`
 
 export const Input = styled.input`
   position: relative;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  padding-left: 30px;
+  padding-top: ${p => p.theme.space[2]}px;
+  padding-bottom: ${p => p.theme.space[2]}px;
+  padding-left: ${p => p.theme.space[4]}px;
   width: 300px;
   border-style: none;
+  border-radius: ${p => p.theme.radii[4]};
 `;
 
 export const Button = styled.button`

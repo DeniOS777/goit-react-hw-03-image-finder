@@ -2,10 +2,10 @@ export const theme = {
   colors: {
     lightGrey: '#cccccc',
     mediumGrey: '#808080',
+    black: '#000000',
     blue: '#4354B0',
     blueHover: '#39489e',
     white: '#ffffff',
-    black: '#000000',
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],

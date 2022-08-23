@@ -14,9 +14,7 @@ export const ModalWindow = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* width: 300px; */
-  /* height: 200px; */
-  background-color: #ffffff;
+  background-color: ${p => p.theme.colors.white};
   border-radius: ${p => p.theme.radii[6]};
   overflow: hidden;
 `;

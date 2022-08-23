@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import { Searchbar } from './Searchbar';
-import * as API from '../services';
 import { ImageGallery } from './ImageGallery';
 import { Button } from './Button';
 import { Loader } from './Loader';
+import * as API from '../services';
 
+import 'react-toastify/dist/ReactToastify.css';
 import { GlobalStyle } from './GlobalStyle';
-
-// import { Modal } from './Modal';
 
 export class App extends Component {
   state = {
@@ -37,7 +37,7 @@ export class App extends Component {
 
   handleSubmit = query => {
     if (!query) {
-      return console.log('Enter search word');
+      return toast.info('Please enter a search word for search');
     }
     this.setState({
       query,
@@ -63,6 +63,7 @@ export class App extends Component {
           <Button loadMore={this.loadMoreImages}>Load more</Button>
         )}
         <GlobalStyle />
+        <ToastContainer autoClose={2500} />
       </div>
     );
   }
