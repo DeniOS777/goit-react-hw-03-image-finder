@@ -13,6 +13,8 @@ export const ModalWindow = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 70%;
+  max-height: 650px;
   transform: translate(-50%, -50%);
   background-color: ${p => p.theme.colors.white};
   border-radius: ${p => p.theme.radii[6]};

@@ -17,7 +17,6 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   position: absolute;
-  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;

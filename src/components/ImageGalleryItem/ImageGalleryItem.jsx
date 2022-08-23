@@ -16,7 +16,9 @@ export class ImageGalleryItem extends Component {
 
     return (
       <ImageItem>
-        <img onClick={this.toggleModal} src={smallImage} alt={tag} />
+        <div>
+          <img onClick={this.toggleModal} src={smallImage} alt={tag} />
+        </div>
         {isShow && (
           <Modal largeImage={largeImage} tag={tag} onClose={this.toggleModal} />
         )}

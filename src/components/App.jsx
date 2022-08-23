@@ -64,7 +64,7 @@ export class App extends Component {
 
         {isLoading && <Loader />}
 
-        {images.length > 0 && (
+        {images.length > 0 && !isLoading && (
           <Button loadMore={this.loadMoreImages}>Load more</Button>
         )}
         <GlobalStyle />

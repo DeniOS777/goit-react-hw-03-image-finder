@@ -21,11 +21,12 @@ export class Searchbar extends Component {
     return (
       <Box
         as="header"
-        bg="blue"
-        p={2}
-        mb={2}
+        position="fixed"
         display="flex"
         justifyContent="center"
+        p={2}
+        width="100%"
+        bg="blue"
       >
         <Form onSubmit={this.handleSubmit}>
           <Input
