@@ -4,6 +4,7 @@ import { Searchbar } from './Searchbar';
 import { ImageGallery } from './ImageGallery';
 import { Button } from './Button';
 import { Loader } from './Loader';
+import { ErrorMessage } from './ErrorMessage';
 import * as API from '../services';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +17,7 @@ export class App extends Component {
     page: 1,
     isLoading: false,
     isShowLoadMore: true,
+    error: false,
   };
 
   perPage = 12;
@@ -23,29 +25,31 @@ export class App extends Component {
   async componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
 
-    if (prevState.query !== query || prevState.page !== page) {
-      const data = await API.getImages(query, page);
-      console.log(data);
+    try {
+      if (prevState.query !== query || prevState.page !== page) {
+        const data = await API.getImages(query, page);
 
-      if (data.totalHits === 0) {
-        this.setState({ isLoading: false });
-        return this.notFindedImagesNotification();
-      }
+        if (data.totalHits === 0) {
+          this.setState({ isLoading: false });
+          return this.notFindedImagesNotification();
+        }
 
-      if (data.totalHits < this.perPage * page) {
-        console.log('Hide load more');
-
-        this.setState(prevState => ({
+        if (data.totalHits < this.perPage * page) {
+          this.notLoadMoreNotification();
+          return this.setState(prevState => ({
+            images: [...prevState.images, ...data.hits],
+            isLoading: !prevState.isLoading,
+            isShowLoadMore: !prevState.isShowLoadMore,
+          }));
+        }
+        return this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
           isLoading: !prevState.isLoading,
-          isShowLoadMore: !prevState.isShowLoadMore,
-        }));
-      } else {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits],
-          isLoading: !prevState.isLoading,
         }));
       }
+    } catch (error) {
+      this.setState({ isLoading: false, error: true });
+      this.errorNotification(error);
     }
   }
 
@@ -69,6 +73,10 @@ export class App extends Component {
     }));
   };
 
+  successFindedImages = count => {
+    toast.success(`We finded ${count} images`);
+  };
+
   emptySearchFieldNotification = () => {
     toast.info('Please enter a keyword for search');
   };
@@ -77,15 +85,21 @@ export class App extends Component {
     toast.warning('Whoops not finded images. Please enter correct keyword');
   };
 
-  successFindedImages = count => {
-    toast.success(`We finded ${count} images`);
+  notLoadMoreNotification = () => {
+    toast.info(
+      'Sorry, you have uploaded all images with this keyword, please try another word'
+    );
+  };
+
+  errorNotification = error => {
+    toast.error(error.message);
   };
 
   render() {
-    const { images, isLoading, isShowLoadMore } = this.state;
+    const { images, isLoading, isShowLoadMore, error } = this.state;
 
     return (
-      <div>
+      <>
         <Searchbar onSubmit={this.handleSubmit} />
         <ImageGallery items={images} />
 
@@ -94,9 +108,11 @@ export class App extends Component {
         {images.length > 0 && !isLoading && isShowLoadMore && (
           <Button onClick={this.loadMoreImages}>Load more</Button>
         )}
+
+        {error ? <ErrorMessage text="Something went wrong😢" /> : null}
         <GlobalStyle />
         <ToastContainer autoClose={2500} />
-      </div>
+      </>
     );
   }
 }

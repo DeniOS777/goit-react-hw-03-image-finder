@@ -5,14 +5,10 @@ export const ImageItem = styled.li`
   overflow: hidden;
 
   & > div {
-    /* position: relative; */
     height: 218px;
     width: 100%;
 
     & > img {
-      /* position: absolute; */
-      /* top: 0; */
-      /* left: 0; */
       transition: transform 450ms ease-in-out;
     }
   }
