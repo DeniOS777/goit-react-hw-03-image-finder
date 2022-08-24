@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from '../Modal';
-import { ImageItem } from './ImageGalleryItem.styled';
+import { ImageCard, ImageWrap } from './ImageGalleryItem.styled';
 
 export class ImageGalleryItem extends Component {
   state = {
@@ -15,14 +15,14 @@ export class ImageGalleryItem extends Component {
     const { smallImage, largeImage, tag } = this.props;
 
     return (
-      <ImageItem>
-        <div>
+      <ImageCard>
+        <ImageWrap>
           <img onClick={this.toggleModal} src={smallImage} alt={tag} />
-        </div>
+        </ImageWrap>
         {isShow && (
           <Modal largeImage={largeImage} tag={tag} onClose={this.toggleModal} />
         )}
-      </ImageItem>
+      </ImageCard>
     );
   }
 }

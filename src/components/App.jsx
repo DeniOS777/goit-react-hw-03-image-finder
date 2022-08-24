@@ -35,7 +35,7 @@ export class App extends Component {
         }
 
         if (data.totalHits < this.perPage * page) {
-          this.notLoadMoreNotification();
+          this.notLoadMoreImagesNotification();
           return this.setState(prevState => ({
             images: [...prevState.images, ...data.hits],
             isLoading: !prevState.isLoading,
@@ -85,7 +85,7 @@ export class App extends Component {
     toast.warning('Whoops not finded images. Please enter correct keyword');
   };
 
-  notLoadMoreNotification = () => {
+  notLoadMoreImagesNotification = () => {
     toast.info(
       'Sorry, you have uploaded all images with this keyword, please try another word'
     );
