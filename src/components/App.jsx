@@ -15,8 +15,10 @@ export class App extends Component {
     query: '',
     page: 1,
     isLoading: false,
-    isShowButton: true,
+    isShowLoadMore: true,
   };
+
+  perPage = 12;
 
   async componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
@@ -30,18 +32,18 @@ export class App extends Component {
         return this.notFindedImagesNotification();
       }
 
-      if (data.totalHits < 12 * page) {
+      if (data.totalHits < this.perPage * page) {
         console.log('Hide load more');
 
         this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
-          isLoading: false,
-          isShowButton: false,
+          isLoading: !prevState.isLoading,
+          isShowLoadMore: !prevState.isShowLoadMore,
         }));
       } else {
         this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
-          isLoading: false,
+          isLoading: !prevState.isLoading,
         }));
       }
     }
@@ -56,14 +58,14 @@ export class App extends Component {
       page: 1,
       images: [],
       isLoading: true,
-      isShowButton: true,
+      isShowLoadMore: true,
     });
   };
 
   loadMoreImages = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
-      isLoading: true,
+      isLoading: !prevState.isLoading,
     }));
   };
 
@@ -80,7 +82,7 @@ export class App extends Component {
   };
 
   render() {
-    const { images, isLoading, isShowButton } = this.state;
+    const { images, isLoading, isShowLoadMore } = this.state;
 
     return (
       <div>
@@ -89,7 +91,7 @@ export class App extends Component {
 
         {isLoading && <Loader />}
 
-        {images.length > 0 && !isLoading && isShowButton && (
+        {images.length > 0 && !isLoading && isShowLoadMore && (
           <Button onClick={this.loadMoreImages}>Load more</Button>
         )}
         <GlobalStyle />
