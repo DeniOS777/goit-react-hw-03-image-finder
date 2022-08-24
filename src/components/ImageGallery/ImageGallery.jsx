@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { ImageGalleryItem } from '../ImageGalleryItem';
 import { ImageList } from './ImageGallery.styled';
 
 export class ImageGallery extends Component {
+  static defaultProps = {
+    items: PropTypes.array.isRequired,
+  };
+
   render() {
     const { items } = this.props;
     return (

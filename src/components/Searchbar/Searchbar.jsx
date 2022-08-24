@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { IoSearchOutline } from 'react-icons/io5';
+
 import { Box } from '../Box';
 import { Form, Input, Button } from './Searchbar.styled';
 
 export class Searchbar extends Component {
+  static defaultProps = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   state = {
     searchQuery: '',
   };

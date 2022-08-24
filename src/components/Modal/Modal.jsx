@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { createPortal } from 'react-dom';
 import { Backdrop, ModalWindow } from './Modal.styled';
 
 const refModalRoot = document.querySelector('#root-modal');
 
 export class Modal extends Component {
+  static defaultProps = {
+    largeImage: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+  };
+
   componentDidMount() {
     window.addEventListener('keydown', this.handlePressEscape);
   }

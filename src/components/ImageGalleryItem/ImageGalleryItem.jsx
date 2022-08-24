@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { Modal } from '../Modal';
 import { ImageCard, ImageWrap } from './ImageGalleryItem.styled';
 
 export class ImageGalleryItem extends Component {
+  static defaultProps = {
+    tag: PropTypes.string.isRequired,
+    smallImage: PropTypes.string.isRequired,
+    largeImage: PropTypes.string.isRequired,
+  };
+
   state = {
     isShow: false,
   };
