@@ -6,6 +6,8 @@ export const theme = {
     blue: '#4354B0',
     blueHover: '#39489e',
     white: '#ffffff',
+    violet: '#761999',
+    focus: '#4ba2ff',
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],

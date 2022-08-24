@@ -13,6 +13,10 @@ export const Input = styled.input`
   width: 300px;
   border-style: none;
   border-radius: ${p => p.theme.radii[4]};
+
+  &:focus {
+    outline: 2px solid ${p => p.theme.colors.focus};
+  }
 `;
 
 export const Button = styled.button`

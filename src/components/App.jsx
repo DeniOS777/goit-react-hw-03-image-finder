@@ -15,47 +15,72 @@ export class App extends Component {
     query: '',
     page: 1,
     isLoading: false,
+    isShowButton: true,
   };
 
   async componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
-    const prevQuery = prevState.query;
-    const prevPage = prevState.page;
-    const nextQuery = this.state.query;
-    const nextPage = this.state.page;
 
-    if (prevQuery !== nextQuery || prevPage !== nextPage) {
+    if (prevState.query !== query || prevState.page !== page) {
       const data = await API.getImages(query, page);
-      const images = data.hits;
       console.log(data);
-      if (images.length === 0) {
+
+      if (data.totalHits === 0) {
         this.setState({ isLoading: false });
-        return console.log('whoops not finded images');
+        return this.notFindedImagesNotification();
       }
-      this.setState(prevState => ({
-        images: [...prevState.images, ...images],
-        isLoading: false,
-      }));
+
+      if (data.totalHits < 12 * page) {
+        console.log('Hide load more');
+
+        this.setState(prevState => ({
+          images: [...prevState.images, ...data.hits],
+          isLoading: false,
+          isShowButton: false,
+        }));
+      } else {
+        this.setState(prevState => ({
+          images: [...prevState.images, ...data.hits],
+          isLoading: false,
+        }));
+      }
     }
   }
 
   handleSubmit = query => {
     if (!query) {
-      return toast.info('Please enter a keyword for search');
+      return this.emptySearchFieldNotification();
     }
     this.setState({
       query,
       page: 1,
       images: [],
       isLoading: true,
+      isShowButton: true,
     });
   };
 
-  loadMoreImages = () =>
-    this.setState(prevState => ({ page: prevState.page + 1, isLoading: true }));
+  loadMoreImages = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+      isLoading: true,
+    }));
+  };
+
+  emptySearchFieldNotification = () => {
+    toast.info('Please enter a keyword for search');
+  };
+
+  notFindedImagesNotification = () => {
+    toast.warning('Whoops not finded images. Please enter correct keyword');
+  };
+
+  successFindedImages = count => {
+    toast.success(`We finded ${count} images`);
+  };
 
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, isShowButton } = this.state;
 
     return (
       <div>
@@ -64,7 +89,7 @@ export class App extends Component {
 
         {isLoading && <Loader />}
 
-        {images.length > 0 && !isLoading && (
+        {images.length > 0 && !isLoading && isShowButton && (
           <Button onClick={this.loadMoreImages}>Load more</Button>
         )}
         <GlobalStyle />
@@ -73,11 +98,3 @@ export class App extends Component {
     );
   }
 }
-
-// if (totalHits > perPage * page) {
-//        500         12      40
-// }
-// 40 * 12 = 480
-// 41 * 12 = 492
-// 42 * 12 = 504 Ok
-// 43 * 12 = error
