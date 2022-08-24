@@ -34,24 +34,32 @@ export class App extends Component {
           return this.notFindedImagesNotification();
         }
 
-        if (data.totalHits < this.perPage * page) {
-          this.notLoadMoreImagesNotification();
-          return this.setState(prevState => ({
-            images: [...prevState.images, ...data.hits],
-            isLoading: !prevState.isLoading,
-            isShowLoadMore: !prevState.isShowLoadMore,
-          }));
+        if (prevState.page === page || prevState.query !== query) {
+          this.successFindedImages(data.totalHits);
         }
-        return this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits],
-          isLoading: !prevState.isLoading,
-        }));
+
+        this.writeFindedImagesToState(data, page);
       }
     } catch (error) {
       this.setState({ isLoading: false, error: true });
       this.errorNotification(error);
     }
   }
+
+  writeFindedImagesToState = (data, page) => {
+    if (data.totalHits < this.perPage * page) {
+      this.notLoadMoreImagesNotification();
+      return this.setState(prevState => ({
+        images: [...prevState.images, ...data.hits],
+        isLoading: !prevState.isLoading,
+        isShowLoadMore: !prevState.isShowLoadMore,
+      }));
+    }
+    return this.setState(prevState => ({
+      images: [...prevState.images, ...data.hits],
+      isLoading: !prevState.isLoading,
+    }));
+  };
 
   handleSubmit = query => {
     if (!query) {
