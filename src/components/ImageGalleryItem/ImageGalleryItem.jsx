@@ -19,6 +19,7 @@ export class ImageGalleryItem extends Component {
         <ImageWrap>
           <img onClick={this.toggleModal} src={smallImage} alt={tag} />
         </ImageWrap>
+
         {isShow && (
           <Modal largeImage={largeImage} tag={tag} onClose={this.toggleModal} />
         )}
