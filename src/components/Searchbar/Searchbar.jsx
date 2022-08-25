@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { IoSearchOutline } from 'react-icons/io5';
 
@@ -14,11 +15,19 @@ export class Searchbar extends Component {
     searchQuery: '',
   };
 
-  handleChange = e => this.setState({ searchQuery: e.target.value.trim() });
+  handleChange = e => this.setState({ searchQuery: e.target.value });
 
   handleSubmit = e => {
     e.preventDefault();
+
+    if (this.state.searchQuery.trim() === '') {
+      return this.emptySearchFieldNotification();
+    }
     this.props.onSubmit(this.state.searchQuery);
+  };
+
+  emptySearchFieldNotification = () => {
+    toast.info('Please enter a keyword for search');
   };
 
   render() {

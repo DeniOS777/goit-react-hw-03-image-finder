@@ -62,9 +62,6 @@ export class App extends Component {
   };
 
   handleSubmit = query => {
-    if (!query) {
-      return this.emptySearchFieldNotification();
-    }
     this.setState({
       query,
       page: 1,
@@ -83,10 +80,6 @@ export class App extends Component {
 
   successFindedImages = count => {
     toast.success(`We finded ${count} images`);
-  };
-
-  emptySearchFieldNotification = () => {
-    toast.info('Please enter a keyword for search');
   };
 
   notFindedImagesNotification = () => {
@@ -117,7 +110,7 @@ export class App extends Component {
           <Button onClick={this.loadMoreImages}>Load more</Button>
         )}
 
-        {error ? <ErrorMessage text="Something went wrong😢" /> : null}
+        {error && <ErrorMessage text="Something went wrong😢" />}
         <GlobalStyle />
         <ToastContainer autoClose={2500} />
       </>
