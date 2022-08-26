@@ -6,14 +6,15 @@ export const Backdrop = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
 `;
 
 export const ModalWindow = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 70%;
+  max-width: 70%;
+  width: 100%;
   max-height: 650px;
   transform: translate(-50%, -50%);
   background-color: ${p => p.theme.colors.white};

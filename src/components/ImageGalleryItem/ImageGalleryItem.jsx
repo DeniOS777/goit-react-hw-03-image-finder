@@ -23,9 +23,9 @@ export class ImageGalleryItem extends Component {
     const { smallImage, largeImage, tag } = this.props;
 
     return (
-      <ImageCard>
+      <ImageCard onClick={this.toggleModal}>
         <ImageWrap>
-          <img onClick={this.toggleModal} src={smallImage} alt={tag} />
+          <img src={smallImage} alt={tag} />
         </ImageWrap>
 
         {isShow && (
