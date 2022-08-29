@@ -38,28 +38,24 @@ export class App extends Component {
           this.successFindedImages(data.totalHits);
         }
 
-        this.writeFindedImagesToState(data, page);
+        if (data.totalHits < this.perPage * page) {
+          this.notLoadMoreImagesNotification();
+          return this.setState(prevState => ({
+            images: [...prevState.images, ...data.hits],
+            isLoading: !prevState.isLoading,
+            isShowLoadMore: !prevState.isShowLoadMore,
+          }));
+        }
+        return this.setState(prevState => ({
+          images: [...prevState.images, ...data.hits],
+          isLoading: !prevState.isLoading,
+        }));
       }
     } catch (error) {
       this.setState({ isLoading: false, error: true });
       this.errorNotification(error);
     }
   }
-
-  writeFindedImagesToState = (data, page) => {
-    if (data.totalHits < this.perPage * page) {
-      this.notLoadMoreImagesNotification();
-      return this.setState(prevState => ({
-        images: [...prevState.images, ...data.hits],
-        isLoading: !prevState.isLoading,
-        isShowLoadMore: !prevState.isShowLoadMore,
-      }));
-    }
-    return this.setState(prevState => ({
-      images: [...prevState.images, ...data.hits],
-      isLoading: !prevState.isLoading,
-    }));
-  };
 
   handleSubmit = query => {
     this.setState({
@@ -79,7 +75,7 @@ export class App extends Component {
   };
 
   successFindedImages = count => {
-    toast.success(`We finded ${count} images`);
+    toast.success(`Hurra, we finded ${count} images`);
   };
 
   notFindedImagesNotification = () => {
