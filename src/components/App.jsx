@@ -28,10 +28,14 @@ export class App extends Component {
   perPage = 12;
 
   async componentDidUpdate(_, prevState) {
-    const { query, page } = this.state;
+    const { query, page, images } = this.state;
 
     try {
-      if (prevState.query !== query || prevState.page !== page) {
+      if (
+        prevState.query !== query ||
+        prevState.page !== page ||
+        images.length === 0
+      ) {
         const data = await API.getImages(query, page);
 
         if (data.totalHits === 0) {
