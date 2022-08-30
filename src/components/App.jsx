@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { Searchbar } from './Searchbar';
 import { ImageGallery } from './ImageGallery';
 import { Button } from './Button';
@@ -8,16 +8,21 @@ import { ErrorMessage } from './ErrorMessage';
 import * as API from '../services';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { GlobalStyle } from './GlobalStyle';
+
+const STATUS = {
+  IDLE: 'idle',
+  PENDING: 'pending',
+  RESOLVED: 'resolved',
+  REJECTED: 'rejected',
+};
 
 export class App extends Component {
   state = {
     images: [],
     query: '',
     page: 1,
-    isLoading: false,
     isShowLoadMore: true,
-    error: false,
+    status: STATUS.IDLE,
   };
 
   perPage = 12;
@@ -30,7 +35,7 @@ export class App extends Component {
         const data = await API.getImages(query, page);
 
         if (data.totalHits === 0) {
-          this.setState({ isLoading: false });
+          this.setState({ status: STATUS.RESOLVED });
           return this.notFindedImagesNotification();
         }
 
@@ -42,17 +47,17 @@ export class App extends Component {
           this.notLoadMoreImagesNotification();
           return this.setState(prevState => ({
             images: [...prevState.images, ...data.hits],
-            isLoading: !prevState.isLoading,
+            status: STATUS.RESOLVED,
             isShowLoadMore: !prevState.isShowLoadMore,
           }));
         }
         return this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
-          isLoading: !prevState.isLoading,
+          status: STATUS.RESOLVED,
         }));
       }
     } catch (error) {
-      this.setState({ isLoading: false, error: true });
+      this.setState({ status: STATUS.REJECTED });
       this.errorNotification(error);
     }
   }
@@ -62,7 +67,7 @@ export class App extends Component {
       query,
       page: 1,
       images: [],
-      isLoading: true,
+      status: STATUS.PENDING,
       isShowLoadMore: true,
     });
   };
@@ -70,7 +75,7 @@ export class App extends Component {
   loadMoreImages = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
-      isLoading: !prevState.isLoading,
+      status: STATUS.PENDING,
     }));
   };
 
@@ -93,23 +98,59 @@ export class App extends Component {
   };
 
   render() {
-    const { images, isLoading, isShowLoadMore, error } = this.state;
+    const { images, status, isShowLoadMore } = this.state;
+    const hasImages = images.length > 0;
 
-    return (
-      <>
-        <Searchbar onSubmit={this.handleSubmit} />
-        <ImageGallery items={images} />
+    if (status === STATUS.IDLE) {
+      return <Searchbar onSubmit={this.handleSubmit} />;
+    }
 
-        {isLoading && <Loader />}
+    if (status === STATUS.PENDING) {
+      return (
+        <>
+          <Searchbar onSubmit={this.handleSubmit} />
+          {hasImages && <ImageGallery items={images} />}
+          <Loader hasImages={hasImages} />
+        </>
+      );
+    }
 
-        {images.length > 0 && !isLoading && isShowLoadMore && (
-          <Button onClick={this.loadMoreImages}>Load more</Button>
-        )}
+    if (status === STATUS.RESOLVED) {
+      return (
+        <>
+          <Searchbar onSubmit={this.handleSubmit} />
+          {hasImages && <ImageGallery items={images} />}
+          {hasImages && isShowLoadMore && (
+            <Button onClick={this.loadMoreImages}>Load more</Button>
+          )}
+        </>
+      );
+    }
 
-        {error && <ErrorMessage text="Something went wrong😢" />}
-        <GlobalStyle />
-        <ToastContainer autoClose={2500} />
-      </>
-    );
+    if (status === STATUS.REJECTED) {
+      return (
+        <>
+          <Searchbar onSubmit={this.handleSubmit} />
+          <ErrorMessage text="Something went wrong😢. Please try again later" />
+        </>
+      );
+    }
+
+    // return (
+    //   <>
+    //     <Searchbar onSubmit={this.handleSubmit} />
+    //     <ImageGallery items={images} />
+
+    //     {isLoading && <Loader />}
+
+    //     {images.length > 0 && !isLoading && isShowLoadMore && (
+    //       <Button onClick={this.loadMoreImages}>Load more</Button>
+    //     )}
+
+    //     {error && <ErrorMessage text="Something went wrong😢" />}
+    //     <GlobalStyle />
+    //     <ToastContainer autoClose={2500} />
+    //   </>
+    // );
   }
 }
