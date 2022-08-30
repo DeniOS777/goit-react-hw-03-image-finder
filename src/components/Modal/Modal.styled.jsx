@@ -18,6 +18,6 @@ export const ModalWindow = styled.div`
   max-height: 650px;
   transform: translate(-50%, -50%);
   background-color: ${p => p.theme.colors.white};
-  border-radius: ${p => p.theme.radii[6]};
+  border-radius: ${p => p.theme.radii[4]};
   overflow: hidden;
 `;
