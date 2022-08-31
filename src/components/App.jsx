@@ -29,12 +29,18 @@ export class App extends Component {
 
   async componentDidUpdate(_, prevState) {
     const { query, page, images } = this.state;
+    console.log('PrevQuery', prevState.query);
+    console.log('CurrentQuery', query);
+    console.log('PrevPage', prevState.page);
+    console.log('CurrentPage', page);
+    console.log('PrevImages', prevState.images);
+    console.log('CurrentImages', images);
 
     try {
       if (
         prevState.query !== query ||
         prevState.page !== page ||
-        images.length === 0
+        prevState.images > images
       ) {
         const data = await API.getImages(query, page);
 
@@ -43,7 +49,11 @@ export class App extends Component {
           return this.notFindedImagesNotification();
         }
 
-        if (prevState.page === page || prevState.query !== query) {
+        if (
+          prevState.page === page ||
+          prevState.query !== query ||
+          prevState.images > images
+        ) {
           this.successFindedImages(data.totalHits);
         }
 
