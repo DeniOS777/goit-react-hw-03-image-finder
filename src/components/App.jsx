@@ -29,12 +29,6 @@ export class App extends Component {
 
   async componentDidUpdate(_, prevState) {
     const { query, page, images } = this.state;
-    console.log('PrevQuery', prevState.query);
-    console.log('CurrentQuery', query);
-    console.log('PrevPage', prevState.page);
-    console.log('CurrentPage', page);
-    console.log('PrevImages', prevState.images);
-    console.log('CurrentImages', images);
 
     try {
       if (
@@ -149,22 +143,5 @@ export class App extends Component {
         </>
       );
     }
-
-    // return (
-    //   <>
-    //     <Searchbar onSubmit={this.handleSubmit} />
-    //     <ImageGallery items={images} />
-
-    //     {isLoading && <Loader />}
-
-    //     {images.length > 0 && !isLoading && isShowLoadMore && (
-    //       <Button onClick={this.loadMoreImages}>Load more</Button>
-    //     )}
-
-    //     {error && <ErrorMessage text="Something went wrong😢" />}
-    //     <GlobalStyle />
-    //     <ToastContainer autoClose={2500} />
-    //   </>
-    // );
   }
 }
