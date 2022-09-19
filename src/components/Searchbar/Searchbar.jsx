@@ -7,7 +7,7 @@ import { Box } from '../Box';
 import { Form, Input, Button } from './Searchbar.styled';
 
 export class Searchbar extends Component {
-  static defaultProps = {
+  static propTypes = {
     onSubmit: PropTypes.func.isRequired,
   };
 

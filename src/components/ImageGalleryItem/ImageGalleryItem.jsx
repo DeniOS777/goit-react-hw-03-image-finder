@@ -5,7 +5,7 @@ import { Modal } from '../Modal';
 import { ImageCard, ImageWrap } from './ImageGalleryItem.styled';
 
 export class ImageGalleryItem extends Component {
-  static defaultProps = {
+  static propTypes = {
     tag: PropTypes.string.isRequired,
     smallImage: PropTypes.string.isRequired,
     largeImage: PropTypes.string.isRequired,

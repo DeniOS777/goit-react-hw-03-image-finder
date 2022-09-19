@@ -48,7 +48,7 @@ export class App extends Component {
           prevState.query !== query ||
           prevState.images > images
         ) {
-          this.successFindedImages(data.totalHits);
+          this.successFindedImagesNotification(data.totalHits);
         }
 
         if (data.totalHits < this.perPage * page) {
@@ -87,7 +87,7 @@ export class App extends Component {
     }));
   };
 
-  successFindedImages = count => {
+  successFindedImagesNotification = count => {
     toast.success(`Hurra, we finded ${count} images`);
   };
 

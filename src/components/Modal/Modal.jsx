@@ -7,7 +7,7 @@ import { Backdrop, ModalWindow } from './Modal.styled';
 const refModalRoot = document.querySelector('#root-modal');
 
 export class Modal extends Component {
-  static defaultProps = {
+  static propTypes = {
     largeImage: PropTypes.string.isRequired,
     tag: PropTypes.string.isRequired,
   };

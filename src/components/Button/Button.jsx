@@ -11,6 +11,7 @@ const Button = ({ children, onClick, ...allyProps }) => {
 };
 
 Button.defaultProps = {
+  onClick: () => null,
   'aria-label': '',
 };
 
