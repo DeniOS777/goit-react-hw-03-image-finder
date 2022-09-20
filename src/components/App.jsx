@@ -43,11 +43,7 @@ export class App extends Component {
           return this.notFindedImagesNotification();
         }
 
-        if (
-          prevState.page === page ||
-          prevState.query !== query ||
-          prevState.images > images
-        ) {
+        if (prevState.page === page || prevState.images > images) {
           this.successFindedImagesNotification(data.totalHits);
         }
 
